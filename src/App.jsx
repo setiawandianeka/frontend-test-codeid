@@ -151,7 +151,7 @@ function App() {
         {
           listContact.map((obj, index) => {
             return (
-              <Card key={obj.id} xShadow={3} yShadow={4} className="bg-white rounded-lg p-6 text-black border-2 border-black group cursor-default">
+              <Card data-testid="list-contact" key={obj.id} xShadow={3} yShadow={4} className="bg-white rounded-lg p-6 text-black border-2 border-black group cursor-default">
                 <div className="flex items-center gap-x-2 relative">
                   <img
                     loading='lazy'
