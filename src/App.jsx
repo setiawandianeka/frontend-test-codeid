@@ -51,21 +51,25 @@ function App() {
 
   const onUploadFile = () => {
     dispatch(setLoading(true))
-    imagekitClient.upload({
-      file : imageUrl,
-      fileName : `foto-profile`,
-      extensions: [
-          {
-              name: "google-auto-tagging",
-              maxTags: 5,
-              minConfidence: 95
-          }
-      ]
-    }).then(response => {
-      selectedId?.id ? onEditContact({ photoUrl: response?.url }) : onAddNewContact({ photoUrl: response?.url })
-    }).catch(error => {
-      toast.error('failed uploading attachment, please try again.')
-    });
+    if (imageUrl) {
+      imagekitClient.upload({
+        file : imageUrl,
+        fileName : `foto-profile`,
+        extensions: [
+            {
+                name: "google-auto-tagging",
+                maxTags: 5,
+                minConfidence: 95
+            }
+        ]
+      }).then(response => {
+        selectedId?.id ? onEditContact({ photoUrl: response?.url }) : onAddNewContact({ photoUrl: response?.url })
+      }).catch(error => {
+        toast.error('failed uploading photo, please try again.')
+      });
+    } else {
+      selectedId?.id ? onEditContact({ photoUrl: previewImageUrl }) : onAddNewContact({ photoUrl: previewImageUrl })
+    }
   }
 
   const getDataContact = () => {
@@ -285,7 +289,7 @@ function App() {
           <div className="flex justify-end">
             <button
               onClick={() => onUploadFile()}
-              disabled={isLoading || !formAddContact?.firstName || !formAddContact?.lastName || !formAddContact?.age || !previewImageUrl || !imageUrl}
+              disabled={isLoading || !formAddContact?.firstName || !formAddContact?.lastName || !formAddContact?.age || !previewImageUrl}
               className="px-6 py-2 disabled:cursor-not-allowed disabled:opacity-60  text-indigo-100 bg-indigo-700 rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-indigo-800 flex items-center gap-x-1"
             >
               {
