@@ -3,11 +3,13 @@ import react from '@vitejs/plugin-react'
 import postcss from './postcss.config.js'
 import path from 'path'
 import macroPlugin from "vite-plugin-babel-macros"
-// https://vitejs.dev/config/
+import svgr from 'vite-plugin-svgr'
+
 export default defineConfig({
   plugins: [
     react(),
     macroPlugin(),
+    svgr(),
   ],
   css: {
     postcss,
